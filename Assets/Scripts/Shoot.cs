@@ -8,7 +8,6 @@ public class Shoot : MonoBehaviour
     public Transform firePos;    
 
     public float bulletSpeed = 20f;
-    public int bulletCount;
     public Text bulletCountText;
 
     Transform aimTarget;
@@ -16,7 +15,8 @@ public class Shoot : MonoBehaviour
     public AudioSource shoot;
     public GameObject effectShoot;
     int Gunammo;
-
+    public int bulletCount;
+    public int gunMagazine;
     private void Start()
     {
         aimTarget = GameObject.FindGameObjectWithTag("AimPos").GetComponent<Transform>();
@@ -29,7 +29,6 @@ public class Shoot : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && bulletCount > 0)
             {
                 bulletCount--;
-                bulletCountText.text = bulletCount.ToString();
                 ShootBullet();
                 shoot.Play();
                 effectShoot.gameObject.SetActive(false);
@@ -40,7 +39,7 @@ public class Shoot : MonoBehaviour
     }
 
 
-        private void ShootBullet()
+    private void ShootBullet()
     {
         var newBullet = Instantiate(bulletPrefab, firePos.position, firePos.rotation);
 

@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using System.Collections;
+using UnityEngine.Animations.Rigging;
 public class PlayerManager : MonoBehaviour
 {
     public CharacterController controller;
@@ -20,7 +21,6 @@ public class PlayerManager : MonoBehaviour
 
     public Animator anim;
 
-
     [HideInInspector] float halfScreenWidth, halfScreenHeight;
     [SerializeField] Transform aimPos;
     [SerializeField] float aimSpeed = 20;
@@ -35,8 +35,10 @@ public class PlayerManager : MonoBehaviour
 
 
     public Text gunMagazineText;
-    public int gunMagazine;
     public Shoot shoot;
+
+    public MultiAimConstraint rHandAim;
+    public TwoBoneIKConstraint lHandAim;
 
     void Start()
     {
@@ -46,8 +48,6 @@ public class PlayerManager : MonoBehaviour
         currentHealth = maxHealth;
         width = healthBarPlayer.rectTransform.rect.width;
         fastMove = 0;
-
-        shoot = GetComponent<Shoot>();
     }
     
     void Update()
@@ -65,8 +65,8 @@ public class PlayerManager : MonoBehaviour
         float percent = currentHealth / maxHealth;
         float currentWidth = width * percent;
         healthBarPlayer.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, currentWidth);
-
-        gunMagazineText.text = gunMagazine.ToString();
+        gunMagazineText.text = shoot.gunMagazine.ToString();
+        shoot.bulletCountText.text = shoot.bulletCount.ToString();
     }
     void AimingPoint()
     {
@@ -92,15 +92,18 @@ public class PlayerManager : MonoBehaviour
     }
     void loadGunAmmo()
     {
-        if(Input.GetKey(KeyCode.R) && gunMagazine > 0)
+        if(Input.GetKeyDown(KeyCode.R) && shoot.gunMagazine > 0)
         {
-            //anim.SetBool("LoadGun", true);
-            gunMagazine--;
+            rHandAim.weight = 0;
+            lHandAim.weight = 0;
             shoot.bulletCount += 5;
+            shoot.gunMagazine -= 1;
+            anim.SetTrigger("LoadGun");
         }
         else
         {
-            //anim.SetBool("LoadGun", false);
+            rHandAim.weight = 1;
+            lHandAim.weight = 1;
         }
     }
     void Move()
@@ -160,7 +163,7 @@ public class PlayerManager : MonoBehaviour
         if (other.CompareTag("GunMagazine"))
         {
             Destroy(other.gameObject);
-            gunMagazine++;
+            shoot.gunMagazine++;
         }
     }
     void TakeDamage()

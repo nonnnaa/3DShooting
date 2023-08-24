@@ -11,19 +11,21 @@ public class PanelManager : MonoBehaviour
 
     public void ToggleSettingPanel()
     {
-        settingPanel.SetActive(!settingPanel.activeSelf);
+        settingPanel.SetActive(true);
 
         if (settingPanel.activeSelf)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
             Time.timeScale = 0f;
         }
         else
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
             Time.timeScale = 1f;
         }
     }
+    public void Resume()
+    {
+        Time.timeScale = 1;
+        settingPanel.SetActive(false);
+    }
+
 }
