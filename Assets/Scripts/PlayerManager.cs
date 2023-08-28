@@ -57,7 +57,7 @@ public class PlayerManager : MonoBehaviour
         Aim();
         AimingPoint();
         UiUpdate();
-        loadGunAmmo();
+        StartCoroutine("loadGunAmmo");
     }
 
     void UiUpdate()
@@ -90,21 +90,25 @@ public class PlayerManager : MonoBehaviour
             anim.SetBool("aim", false);
         }
     }
-    void loadGunAmmo()
+    IEnumerator loadGunAmmo()
     {
         if(Input.GetKeyDown(KeyCode.R) && shoot.gunMagazine > 0)
         {
-            rHandAim.weight = 0;
-            lHandAim.weight = 0;
+            
             shoot.bulletCount += 5;
             shoot.gunMagazine -= 1;
-            anim.SetTrigger("LoadGun");
+            anim.SetBool("LoadGun", true);
+            rHandAim.weight = 0;
+            lHandAim.weight = 0;
+            yield return new WaitForSeconds(2f);
         }
         else
         {
             rHandAim.weight = 1;
             lHandAim.weight = 1;
+            anim.SetBool("LoadGun", false);
         }
+        yield return new WaitForSeconds(0f);
     }
     void Move()
     {

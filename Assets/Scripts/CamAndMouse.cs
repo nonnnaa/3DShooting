@@ -23,7 +23,7 @@ public class CamAndMouse : MonoBehaviour
     }
     void Update()
     {
-        if(Input.GetKey(KeyCode.Escape) && lockMouse < 2f)
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
