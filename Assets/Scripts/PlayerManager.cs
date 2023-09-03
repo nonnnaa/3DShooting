@@ -95,16 +95,6 @@ public class PlayerManager : MonoBehaviour
         {
             shoot.bulletCount += 5;
             shoot.gunMagazine -= 1;
-            anim.SetBool("LoadGun", true);
-            rHandAim.weight = 0;
-            lHandAim.weight = 0;
-            yield return new WaitForSeconds(2f);
-        }
-        else
-        {
-            rHandAim.weight = 1;
-            lHandAim.weight = 1;
-            anim.SetBool("LoadGun", false);
         }
         yield return new WaitForSeconds(0f);
     }
