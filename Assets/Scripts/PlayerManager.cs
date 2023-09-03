@@ -14,7 +14,6 @@ public class PlayerManager : MonoBehaviour
     public float gravity = -9.81f;
     public Vector3 velocity;
     
-
     public float groundOffset;
     public LayerMask groundMask;
     public Vector3 spherePos;
@@ -48,6 +47,8 @@ public class PlayerManager : MonoBehaviour
         currentHealth = maxHealth;
         width = healthBarPlayer.rectTransform.rect.width;
         fastMove = 0;
+        halfScreenWidth = Screen.width / 2;
+        halfScreenHeight = Screen.height / 2;
     }
     
     void Update()
@@ -70,8 +71,6 @@ public class PlayerManager : MonoBehaviour
     }
     void AimingPoint()
     {
-        halfScreenWidth = Screen.width / 2;
-        halfScreenHeight = Screen.height / 2;
         Vector2 screenCenter = new Vector3(halfScreenWidth, halfScreenHeight);
         Ray ray = Camera.main.ScreenPointToRay(screenCenter);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, aimMask))
@@ -94,7 +93,6 @@ public class PlayerManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.R) && shoot.gunMagazine > 0)
         {
-            
             shoot.bulletCount += 5;
             shoot.gunMagazine -= 1;
             anim.SetBool("LoadGun", true);
