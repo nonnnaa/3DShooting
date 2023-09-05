@@ -58,7 +58,7 @@ public class PlayerManager : MonoBehaviour
         Aim();
         AimingPoint();
         UiUpdate();
-        StartCoroutine("loadGunAmmo");
+        loadGunAmmo();
     }
 
     void UiUpdate()
@@ -89,14 +89,13 @@ public class PlayerManager : MonoBehaviour
             anim.SetBool("aim", false);
         }
     }
-    IEnumerator loadGunAmmo()
+    void loadGunAmmo()
     {
         if(Input.GetKeyDown(KeyCode.R) && shoot.gunMagazine > 0)
         {
             shoot.bulletCount += 5;
             shoot.gunMagazine -= 1;
         }
-        yield return new WaitForSeconds(0f);
     }
     void Move()
     {
