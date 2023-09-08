@@ -14,13 +14,11 @@ public class Shoot : MonoBehaviour
 
     public AudioSource shoot;
     public GameObject effectShoot;
-    int Gunammo;
     public int bulletCount;
     public int gunMagazine;
     private void Start()
     {
         aimTarget = GameObject.FindGameObjectWithTag("AimPos").GetComponent<Transform>();
-        Gunammo = 0;
     }
     private void Update()
     {
@@ -42,7 +40,7 @@ public class Shoot : MonoBehaviour
     private void ShootBullet()
     {
         var newBullet = Instantiate(bulletPrefab, firePos.position, firePos.rotation);
-
+        Debug.Log("Shoot");
         var bulletRb = newBullet.GetComponent<Rigidbody>();
         
         var direction = (aimTarget.position - firePos.position).normalized;

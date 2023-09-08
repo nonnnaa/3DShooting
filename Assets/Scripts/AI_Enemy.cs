@@ -31,7 +31,7 @@ public class AI_Enemy : MonoBehaviour
     void checkAttack()
     {
         distance = Vector3.Distance(transform.position, playerTranform.position);
-        Debug.Log(distance);
+        //Debug.Log(distance);
         if (distance < AttackDistance)
         {
             animator.SetBool("E_Attack", true);
