@@ -19,7 +19,7 @@ public class PlayerManager : MonoBehaviour
     public Vector3 spherePos;
 
     public Animator anim;
-
+    
     [HideInInspector] float halfScreenWidth, halfScreenHeight;
     [SerializeField] Transform aimPos;
     [SerializeField] float aimSpeed = 20;
@@ -35,6 +35,8 @@ public class PlayerManager : MonoBehaviour
 
     public Text gunMagazineText;
     public Shoot shoot;
+    public MultiAimConstraint rhandAim;
+    public TwoBoneIKConstraint lhandIK;
 
     public MultiAimConstraint rHandAim;
     public TwoBoneIKConstraint lHandAim;
@@ -58,7 +60,7 @@ public class PlayerManager : MonoBehaviour
         Aim();
         AimingPoint();
         UiUpdate();
-        loadGunAmmo();
+        StartCoroutine("loadGunAmmo");
     }
 
     void UiUpdate()
@@ -89,13 +91,20 @@ public class PlayerManager : MonoBehaviour
             anim.SetBool("aim", false);
         }
     }
-    void loadGunAmmo()
+    IEnumerator loadGunAmmo()
     {
         if(Input.GetKeyDown(KeyCode.R) && shoot.gunMagazine > 0)
         {
             shoot.bulletCount += 5;
             shoot.gunMagazine -= 1;
+            rHandAim.weight = 0;
+            lHandAim.weight = 0;
+            anim.SetTrigger("Reload");
+            yield return new WaitForSeconds(3f);
+            rHandAim.weight = 1;
+            lHandAim.weight = 1;
         }
+
     }
     void Move()
     {
