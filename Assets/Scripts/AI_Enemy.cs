@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class AI_Enemy : MonoBehaviour
 {
     NavMeshAgent agent;
-    public Transform playerTranform;
+    Transform playerTranform;
     public Animator animator;
     float distance;
     public float AttackDistance;
@@ -13,10 +13,11 @@ public class AI_Enemy : MonoBehaviour
 
     void Start()
     {
+        playerTranform = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         distance = (playerTranform.position - transform.position).magnitude;
-
+        
     }
 
     void Update()

@@ -6,9 +6,8 @@ public class DoorManager : MonoBehaviour
 {
     public Transform player;
     float time = 0f;
-    bool check = false;
+    public bool check = false;
     Vector3 pos;
-    public GameObject zombieGirl;
     void Start()
     {
         pos = transform.position;
@@ -26,10 +25,8 @@ public class DoorManager : MonoBehaviour
             transform.position = pos;
             if (check == false)
             {
-                zombieGirl.SetActive(true);
                 check = true;
             }
-
         }
     }
 }

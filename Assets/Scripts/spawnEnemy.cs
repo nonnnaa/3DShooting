@@ -1,47 +1,47 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 public class spawnEnemy : MonoBehaviour
 {
-    public GameObject enemyPrefab;
-    public Vector3[] enemyPos;
-    public int[] enemyCount;
+    public GameObject[] enemyPrefab;
+    public Transform[] enemySpawnPos;
+    public int[] enemyCount; // lưu số enemy mỗi wave
     public int enemyCurrentCount;
-    public Vector3 enemyCurrentPos;
+    int count;
+
+    public DoorManager door;
     private void Start()
     {
-        
+        enemyCurrentCount = 0;
+        count = -1;
+        door = GetComponent<DoorManager>();
     }
     private void Update()
     {
-        
-    }
-
-
-    void checkEnemyCount()
-    {
-        for(int i=0; i<enemyCount.Length; i++)
+        if(enemyCurrentCount == 0)
         {
-            if(enemyCurrentCount < 0)
+            count++;
+            SpawnEnemy(count);
+        }
+    }
+    void SpawnEnemy(int cnt)
+    {
+        enemyCurrentCount += enemyCount[cnt];
+        for (int i = 0; i < enemyCount[cnt]; i++)
+        {
+            if (cnt < 1)
             {
-                enemyCurrentCount = enemyCount[i];
-                enemyCurrentPos = enemyPos[i];
-                SpawnEnemy(enemyCurrentPos, enemyCurrentCount);
+                var enemy = Instantiate(enemyPrefab[0], enemySpawnPos[cnt].position, enemySpawnPos[cnt].rotation);
+            }
+            else if(cnt == 1 && door.check == true)
+            {
+                var enemy = Instantiate(enemyPrefab[1], enemySpawnPos[cnt].position, enemySpawnPos[cnt].rotation);
+            }
+            else
+            {
+                int randomNumber = Random.Range(0,1);
+                var enemy = Instantiate(enemyPrefab[randomNumber], enemySpawnPos[cnt].position, enemySpawnPos[cnt].rotation);
             }
         }
-    }
-
-    void SpawnEnemy(Vector3 pos, int count)
-    {
-        for(int i=0; i<count; i++)
-        {
-            //Invoke("spawn", 3f, );
-        }
-        
-    }
-    void spawn()
-    {
-        //GameObject enemy = Instantiate(enemyPrefab, pos, Quaternion.identity);
-    }
-    
+    }    
 }
