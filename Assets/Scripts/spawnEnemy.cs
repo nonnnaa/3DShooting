@@ -7,33 +7,33 @@ public class spawnEnemy : MonoBehaviour
     public Transform[] enemySpawnPos;
     public int[] enemyCount; // lưu số enemy mỗi wave
     public int enemyCurrentCount;
-    int count;
+    public int cnt;
 
-    public DoorManager door;
     private void Start()
     {
         enemyCurrentCount = 0;
-        count = -1;
-        door = GetComponent<DoorManager>();
+        cnt = -1;
     }
     private void Update()
     {
         if(enemyCurrentCount == 0)
         {
-            count++;
-            SpawnEnemy(count);
+            cnt++;
+            SpawnEnemy(cnt);
         }
     }
     void SpawnEnemy(int cnt)
     {
+        if (cnt >= enemyCount.Length) return;
         enemyCurrentCount += enemyCount[cnt];
+        
         for (int i = 0; i < enemyCount[cnt]; i++)
         {
             if (cnt < 1)
             {
                 var enemy = Instantiate(enemyPrefab[0], enemySpawnPos[cnt].position, enemySpawnPos[cnt].rotation);
             }
-            else if(cnt == 1 && door.check == true)
+            else if(cnt == 1)
             {
                 var enemy = Instantiate(enemyPrefab[1], enemySpawnPos[cnt].position, enemySpawnPos[cnt].rotation);
             }

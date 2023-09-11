@@ -8,10 +8,10 @@ public class DoorManager : MonoBehaviour
     float time = 0f;
     public bool check = false;
     Vector3 pos;
+
     void Start()
     {
         pos = transform.position;
-
     }
     void Update()
     {

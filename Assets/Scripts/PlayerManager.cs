@@ -95,7 +95,7 @@ public class PlayerManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.R) && shoot.gunMagazine > 0)
         {
-            shoot.bulletCount += 5;
+            shoot.bulletCount += 50;
             shoot.gunMagazine -= 1;
             rHandAim.weight = 0;
             lHandAim.weight = 0;
